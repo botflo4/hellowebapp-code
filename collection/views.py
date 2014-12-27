@@ -1,26 +1,40 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.template.defaultfilters import slugify
+
 from collection.forms import ThingForm
 from collection.models import Thing
 
 
-# the rewritten view!
+
 def index(request):
     things = Thing.objects.all()
     return render(request, 'index.html', {
         'things': things,
     })
 
+
 def thing_detail(request, slug):
     # grab the object...
     thing = Thing.objects.get(slug=slug)
+
     # and pass to the template
     return render(request, 'things/thing_detail.html', {
         'thing': thing,
     })
 
+
+@login_required
 def edit_thing(request, slug):
     # grab the object...
     thing = Thing.objects.get(slug=slug)
+
+    # grab the current logged in user and make sure they're the owner of the thing
+    user = request.user
+    if thing.user != user:
+        raise Http404
+
     # set the form we're using...
     form_class = ThingForm
 
@@ -40,5 +54,42 @@ def edit_thing(request, slug):
     # and render the template
     return render(request, 'things/edit_thing.html', {
         'thing': thing,
+        'form': form,
+    })
+
+
+def create_thing(request):
+    # request.user is the logged in user, we're going to assign it to "user" to make it easy
+    user = request.user
+
+    form_class = ThingForm
+
+    # if we're coming from a submitted form, do this
+    if request.method == 'POST':
+        # grab the data from the submitted form and apply to the form
+        form = form_class(request.POST)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            # create the slug from our name
+            slug = slugify(name)
+
+            # create our object
+            thing = Thing.objects.create(
+                name=name,
+                description=description,
+                slug=slug,
+                user=user,
+            )
+
+        # redirect to our newly created thing
+        return redirect('thing_detail', slug=thing.slug)
+
+    # otherwise just create the form
+    else:
+        form = form_class()
+
+    return render(request, 'things/create_thing.html', {
         'form': form,
     })
