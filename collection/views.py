@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from collection.models import Thing
 from collection.forms import ThingForm
+from collection.models import Thing
 
 
 # the rewritten view!
@@ -32,6 +32,7 @@ def edit_thing(request, slug):
             # save the new data
             form.save()
             return redirect('thing_detail', slug=thing.slug)
+
     # otherwise just create the form
     else:
         form = form_class(instance=thing)
