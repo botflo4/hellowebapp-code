@@ -6,4 +6,4 @@ class Thing(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     slug = models.SlugField(unique=True)
-    user = models.ForeignKey(User, unique=True, blank=True, null=True, related_name="users")
+    user = models.OneToOneField(User, blank=True, null=True)
