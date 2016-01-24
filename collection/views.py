@@ -7,7 +7,6 @@ from collection.forms import ThingForm
 from collection.models import Thing
 
 
-
 def index(request):
     things = Thing.objects.all()
     return render(request, 'index.html', {
@@ -41,6 +40,7 @@ def edit_thing(request, slug):
     if request.method == 'POST':
         # grab the data from the submitted form
         form = form_class(data=request.POST, instance=thing)
+
         if form.is_valid():
             # save the new data
             form.save()

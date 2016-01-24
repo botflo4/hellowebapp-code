@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+
 class CollectionTest(TestCase):
     def test_index(self):
         r = self.client.get('/')

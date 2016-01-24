@@ -11,7 +11,7 @@ Find out more and buy the book here:
 
 Our main repository with installation instructions and other tips can be found
 here:
-[https://github.com/limedaring/HelloWebApp](https://github.com/limedaring/HelloWebApp)
+[https://github.com/hellowebapp/hellowebapp](https://github.com/hellowebapp/hellowebapp)
 
 ## Chapters
 
@@ -26,6 +26,7 @@ here:
 * [Chapter 11](https://github.com/limedaring/HelloWebApp-Code/tree/chapter-11)
 * [Chapter 12](https://github.com/limedaring/HelloWebApp-Code/tree/chapter-12)
 * [Chapter 13](https://github.com/limedaring/HelloWebApp-Code/tree/chapter-13)
+* [Chapter 14](https://github.com/limedaring/HelloWebApp-Code/tree/chapter-14)
 
 # License
 
